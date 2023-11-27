@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "core",
+    'core',
+    'corsheaders',
     'chartjs',
     'corsheaders',
 ]
@@ -53,7 +54,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True  
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000"  # antes era 3000, estava no react com 5000,(Endereco do react)

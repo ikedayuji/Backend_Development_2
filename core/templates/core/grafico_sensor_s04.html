@@ -1,0 +1,37 @@
+<!-- Suponha que você tenha uma variável chamada dados_json com os dados do gráfico -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gráfico do Sensor S04</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Gráfico do Sensor S04</h1>
+    <div id="chart-data" style="display: none;">{{ dados_json|safe }}</div>
+    <canvas id="myChart" width="1" height="1"></canvas>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var dados = JSON.parse(document.getElementById('chart-data').textContent);
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dados.labels,
+                datasets: [{
+                    label: 'Sensor S04',
+                    data: dados.values,
+                    backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                    borderColor: 'rgba(0, 123, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

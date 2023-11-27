@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      backgroundColor: #ff6384;
+    }
+
+    .sidebar {
+      width: 250px;
+      height: 100%;
+      background-color: '#333';
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding-top: 20px;
+      color: white;
+    }
+
+    .content {
+      text-align: center;
+      margin-left: 250px;
+      padding: 20px;
+      flex-wrap: wrap;
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .button-group a {
+      display: block;
+      padding: 10px;
+      background-color: #4caf50;
+      color: white;
+      text-decoration: none; 
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease; /* Efeito de transição suave */
+    }
+
+    .button-group a:hover {
+      background-color: #45a049;
+    }
+
+    .button-divider {
+      height: 10px;
+      background-color: #666; /* Cor de fundo cinza escuro entre os botões */
+      margin-bottom: 10px;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin: 20px;
+      flex: 1;
+    }
+
+    h2 {
+      color: #222;
+    }
+  </style>
+  
+</head>
+<body>
+
+<div class="sidebar">
+  <h2>Menu - Dashboard</h2>
+  <div class="button-group">
+    <a href="#" onclick="showDashboard()">Cadastro de Clientes</a>
+    <div class="button-divider"></div>
+    <a href="#" onclick="showPieChart()">Gráfico de Compras</a>
+    <a href="#" onclick="showBarChart()">Gráfico de Vendas</a>
+    <a href="#" onclick="showLineChart()">Gráfico do Faturamento</a>
+    <div class="card"></div>
+  </div>
+</div>
+
+<div class="content">
+  <h2>Demonstrativo de Movimentação da Loja</h2>
+
+  <div class="card"> <!-- Gráfico de Pizza -->
+    <canvas id="pieChart"></canvas>
+  </div>
+
+  <div class="card"> <!-- Gráfico de Barras -->
+    <canvas id="barChart"></canvas>
+  </div>
+
+  <div class="card"> <!-- Gráfico de Linhas -->
+    <canvas id="lineChart"></canvas>
+  </div>
+
+  <script>
+    // Dados para o gráfico de pizza
+    var pieData = {
+      labels: ['Categoria A', 'Categoria B', 'Categoria C'],
+      datasets: [{
+        data: [30, 40, 30], // Valores para cada categoria
+        backgroundColor: ['#ff6384', '#36a2eb', '#ffce56']
+      }]
+    };
+
+    // Configurações do gráfico de pizza
+    var pieOptions = {
+      responsive: true,
+      maintainAspectRatio: false
+    };
+
+    var pieCtx = document.getElementById('pieChart').getContext('2d');
+
+    // gráfico de pizza
+    var pieChart = new Chart(pieCtx, {
+      type: 'pie',
+      data: pieData,
+      options: pieOptions
+    });
+
+    // Dados para o gráfico de barras
+    var barData = {
+      labels: ['Categoria A', 'Categoria B', 'Categoria C'],
+      datasets: [{
+        label: 'Valores',
+        data: [50, 20, 40], // Valores para cada categoria
+        backgroundColor: ['#36a2eb', '#ffce56', '#ff6384']
+      }]
+    };
+
+    // Configurações do gráfico de barras
+    var barOptions = {
+      responsive: true,
+      maintainAspectRatio: false
+    };
+
+    // Obtenha o contexto do canvas para o gráfico de barras
+    var barCtx = document.getElementById('barChart').getContext('2d');
+
+    // Cria o gráfico de barras
+    var barChart = new Chart(barCtx, {
+      type: 'bar',
+      data: barData,
+      options: barOptions
+    });
+
+    // Dados para o gráfico de linhas
+    var lineData = {
+      labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio'],
+      datasets: [{
+        label: 'Vendas',
+        data: [30, 45, 25, 60, 50],
+        borderColor: '#4caf50',
+        borderWidth: 2,
+        fill: false
+      }]
+    };
+
+    // Configurações do gráfico de linhas
+    var lineOptions = {
+      responsive: true,
+      maintainAspectRatio: false
+    };
+
+    var lineCtx = document.getElementById('lineChart').getContext('2d');
+
+    // Cria o gráfico de linhas
+    var lineChart = new Chart(lineCtx, {
+      type: 'line',
+      data: lineData,
+      options: lineOptions
+    });
+
+    // Funções para mostrar/ocultar os gráficos ao clicar nos links
+    function showDashboard() {
+      document.getElementById('pieChart').style.display = 'none';
+      document.getElementById('barChart').style.display = 'none';
+      document.getElementById('lineChart').style.display = 'none';
+    }
+
+    function showPieChart() {
+      document.getElementById('pieChart').style.display = 'block';
+      document.getElementById('barChart').style.display = 'none';
+      document.getElementById('lineChart').style.display = 'none';
+    }
+
+    function showBarChart() {
+      document.getElementById('pieChart').style.display = 'none';
+      document.getElementById('barChart').style.display = 'block';
+      document.getElementById('lineChart').style.display = 'none';
+    }
+
+    function showLineChart() {
+      document.getElementById('pieChart').style.display = 'none';
+      document.getElementById('barChart').style.display = 'none';
+      document.getElementById('lineChart').style.display = 'block';
+    }
+
+    // Inicialmente, mostre o dashboard
+    showDashboard();
+  </script>
+
+
+  <!-- Formulário de Cadastro de Pessoas -->
+  <div class="card"> 
+    <br>
+    <h2>Cadastro de Clientes</h2>
+    <form id="cadastroForm">
+      <col>
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" required>
+      </col>
+      <row>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      </row>
+      <row>
+      <label for="idade">Idade:</label>
+      <input type="number" id="idade" name="idade" required>
+      </row>
+      <button type="submit">Cadastrar</button>
+    </form>
+    <div class="content">
+
+  </div>
+
+</div>
+
+  
+</div>
+</body>
+</html>
